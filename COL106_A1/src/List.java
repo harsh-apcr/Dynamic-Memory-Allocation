@@ -3,7 +3,7 @@
 public abstract class List extends Dictionary {
 
     private List next; // Next Node
-    private List prev;  // Previous Node
+    private List prev; // Previous Node
 
     public List() {
         super(0, 0, 0);
@@ -17,20 +17,21 @@ public abstract class List extends Dictionary {
         this.next = null;
     }
 
-    public abstract List Insert(int address, int size, int key);
+    public abstract List insert(int address, int size, int key);
     // Should insert the element in the DLL after the current node.
-    // Should return the corresponding element created and inserted.
+    // Returns the element inserted
 
-    public abstract boolean Delete(Dictionary d);
+    public abstract boolean delete(Dictionary d);
     // Deletes the entry corresponding to d from the DLL.
     // Searches for the d.key in the DLL
     // Can be called with any node in the DLL. So this function should search forward as well as backwards.
-    // Deletes the element it is found in the DLL and returns true.
+    // Deletes the element it has found in the DLL and returns true.
     // Note there may be multiple elements with the same key value.
     // Delete searches for the node with the same key and same d and returns true only if d as well as d.key match
+    // same d means d.address == this.address && d.size = this.size
     // Returns false if d not found in the DLL.
 
-    public abstract List Find(int k, boolean exact);
+    public abstract List find(int key, boolean exact);
     // Searches for the key k in the DLL.
     // If exact is true, then performs an exact match and returns an element of the dictionary with key = k
     // and returns null if no such element exists.

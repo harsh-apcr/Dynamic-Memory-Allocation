@@ -12,10 +12,10 @@ public abstract class Dictionary {
         this.size = size;
     }
 
-    public abstract Dictionary Insert(int address, int size, int k);
+    public abstract Dictionary insert(int address, int size, int k);
     // Inserts node in the dictionary and returns the corresponding Dictionary element created and inserted
 
-    public abstract boolean Delete(Dictionary d);
+    public abstract boolean delete(Dictionary d);
     // Deletes the entry corresponding to d from the dictionary.
     // Searches for the d.key in the dictionary
     // Deletes the element it is found in the dictionary and returns true.
@@ -23,7 +23,7 @@ public abstract class Dictionary {
     // Delete searches for the node with the same key and same d and returns true only if d as well as d.key match
     // Returns false if d not found in the dictionary.
 
-    public abstract Dictionary Find(int k, boolean exact);
+    public abstract Dictionary find(int k, boolean exact);
     // Searches for the key in the dictionary.
     // If exact is true, then performs and exact match and returns an element of the dictionary with key = k
     // and return null if no such element exists.

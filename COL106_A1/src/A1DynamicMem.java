@@ -16,49 +16,74 @@ public class A1DynamicMem extends DynamicMem {
         super(size, dict_type);
     }
 
-    public void Defragment() {
-        return ;
-    }
+    public void Defragment() { }
 
     // In A1, you need to implement the Allocate and Free functions for the class A1DynamicMem
     // Test your memory allocator thoroughly using Doubly Linked lists only (A1List.java).
 
-    public int Allocate(int blockSize) {
-        Dictionary newMemBlk;
-        if (blockSize < 1) return -1;
-        if (this.freeBlk == null) return -1;
+
+    public int Allocate(int blockSize) throws IllegalArgumentException {
+        if (blockSize < 1) throw new IllegalArgumentException("BlockSize cannot be less than 1");
+        Dictionary freeBlock = this.freeBlk;
+        Dictionary allocatedBlock = this.allocBlk;
+
+        Dictionary firstFitBlock = freeBlock.find(blockSize, false);
+        if (firstFitBlock == null) return -1;
         else {
-            newMemBlk = (this.freeBlk).Find(blockSize ,false);
-            if (newMemBlk == null) return -1;
+            if (firstFitBlock.size > blockSize) {
+                // split the block
+                allocatedBlock.insert(firstFitBlock.address, blockSize, firstFitBlock.address);
+                freeBlock.insert(firstFitBlock.address+blockSize,
+                        firstFitBlock.size-blockSize,
+                        firstFitBlock.size-blockSize);
+            } else {
+                // no need to split the block
+                // blockSize == firstFitBlock.size
+                allocatedBlock.insert(firstFitBlock.address, blockSize, firstFitBlock.address);
+            }
+            firstFitBlock.delete(firstFitBlock);    // firstFitBlock is a Dictionary i.e. part of this.freeBlk
+            return firstFitBlock.address;   // successful allocation
         }
-        int adr = newMemBlk.address;
-        if (newMemBlk.size > blockSize) {
-           freeBlk.Delete(newMemBlk);
-           allocBlk.Insert(adr,blockSize,adr);
-           freeBlk.Insert(adr+blockSize, newMemBlk.size-blockSize ,newMemBlk.size-blockSize);
-        }
-        else {
-            freeBlk.Delete(newMemBlk);
-            allocBlk.Insert(adr,blockSize,adr);
-        }
-        return newMemBlk.address;
     }
 
 
     public int Free(int startAddr) {
+        Dictionary freeBlock = this.freeBlk;
+        Dictionary allocatedBlock = this.allocBlk;
 
-        Dictionary allocBlk = this.allocBlk;
-        Dictionary freeBlk = this.freeBlk;
-
-        Dictionary newNode = allocBlk.Find(startAddr,true);
-
-        if (newNode == null) return -1;
-
+        // find the block with start address startAddr in the allocated block dictionary
+        Dictionary block = allocatedBlock.find(startAddr, true);
+        if (block == null) return -1;
         else {
-            allocBlk.Delete(newNode);
-            freeBlk.Insert(newNode.address, newNode.size, newNode.size);
+            // block != null
+            freeBlock.insert(startAddr, block.size, block.size);
+            block.delete(block);    // block is in allocatedBlock (`this` could very well point to this block)
+            return 0;   // successful memory free
         }
-        return 0;
+    }
+
+    public static void main(String[] args) {
+        DynamicMem memSystem = new A1DynamicMem(100);
+        memSystem.Allocate(5);
+        memSystem.Allocate(10);
+        memSystem.Allocate(15);
+        memSystem.Free(5);
+        memSystem.Free(0);
+        memSystem.Allocate(12);
+        Dictionary allocBlk = memSystem.allocBlk;
+        Dictionary freeBlk = memSystem.freeBlk;
+
+        System.out.println("Alloc Block Traversal --------");
+        for (Dictionary itr = allocBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+            System.out.println(itr);
+        }
+        System.out.println("Free Block Traversal ---------");
+        for (Dictionary itr = freeBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+            System.out.println(itr);
+        }
+
+
+
     }
 
 }

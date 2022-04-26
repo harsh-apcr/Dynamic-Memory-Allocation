@@ -3,22 +3,24 @@
 // Can use three implementation of dictionaries
 //   1. Based on doubly linked lists (List.java --> A1List.java)
 //   2. Based on binary search trees (Tree.java --> BSTree.java)
-//   3. Based on AVL trees (AVLTree.java)
+//   3. Based on RB trees (RBTree.java)
 
 public abstract class DynamicMem {
 
-    public final static int M = 1000000; // Total number of Memory addresses
-    public byte Memory[];  //Memory Array, initailized from data segment
+    public final static int M = 1000000; // Total number of Memory addresses ( 1MB )
+    public byte[] Memory;  //Memory Array, initailized from data segment
 
+
+    // in freeBlk keys are size
+    // in allocBlk keys are startAddr
     public Dictionary freeBlk;             // Free blocks dictionary
-    public Dictionary  allocBlk;           // Allocated blocks dictionary
-    int type;                              // Type of dictionary: 1 -- DL List; 2 -- Binary Search Tree; 3 -- AVL Tree
+    public Dictionary allocBlk;           // Allocated blocks dictionary
+    int type;                             // Type of dictionary: 1 -- DL List; 2 -- Binary Search Tree; 3 -- RB Tree
 
     public DynamicMem() {                  // Constructor function should create a memory of size M if no size specified
-        this(M, 1);                        // Default dictionary using doubly linked lists
+        this(M, 1);  // Default dictionary using doubly linked lists, with size M
     }
     public DynamicMem(int size) {          // Default dictionary uses doubly linked lists
-
         this(size, 1);
     }
 
@@ -28,7 +30,7 @@ public abstract class DynamicMem {
         // Initializes the free blocks and allocates blocks dictionaries
         // If dist_type == 1 then it uses Lists (A1List)
         // If dist_type == 2 then it uses Binary Search Trees (BSTree)
-        // If dist_type == 3 then it uses AVL Trees (AVLTree)
+        // If dist_type == 3 then it uses RB Trees (RBTree)
 
         // Index the dictionary by size to find the best fit in case of BSTs
         // Initially, there is only one block in the free block list
@@ -40,7 +42,7 @@ public abstract class DynamicMem {
         if (type == 1){
             freeBlk = new A1List();   // Initiates the sentinel nodes. (Tail and head)
             allocBlk = new A1List();
-            freeBlk.Insert(0, size, size);
+            freeBlk.insert(0, size, size);
             // Initially free list has only one block with all the memory
         }
  /*       else if (type == 2){
@@ -80,7 +82,7 @@ public abstract class DynamicMem {
     // This function defragments the free block list (dictionary)
     // All the contiguous free blocks are merged into a single large free block
     // Algorithm:
-    //     1. Create a new BST/AVT Tree indexed by address. Use AVL/BST depending on the type.
+    //     1. Create a new BST/RB Tree indexed by address. Use RB/BST depending on the type.
     //     2. Traverse all the free blocks and add them to the tree indexed by address
     //        Note that the free blocks tree will be indexed by size, therefore a new tree indexed by address needs to be created
     //     3. Find the first block in the new tree (indexed by address) and then find the next block
