@@ -1,15 +1,14 @@
 import java.util.Scanner;
 import java.io.File;
-import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 public class Driver_alt {
-    public static void main(String args[]) throws IOException{
+    public static void main(String args[]) {
         try {
-            String filename = "output500K.txt";
+            String filename = "D:\\Course Projects\\COL106-DataStruct\\Dynamic-Memory-Allocation\\COL106_A3\\src\\tests\\outputA3.txt";
             PrintWriter outputStream = new PrintWriter(filename);
-            File myObj = new File("./test500K.txt");
+            File myObj = new File("D:\\Course Projects\\COL106-DataStruct\\Dynamic-Memory-Allocation\\COL106_A3\\src\\tests\\TestA3.txt");
             Scanner sc = new Scanner(myObj);
             int numTestCases;
             numTestCases = sc.nextInt();
@@ -26,13 +25,16 @@ public class Driver_alt {
                     int result = -5;
                     switch (command) {
                         case "Allocate":
-                            result = obj.Allocate(argument);
+                            try {
+                                result = obj.Allocate(argument);
+                            } catch (IllegalArgumentException exc) {result = -1;}
                             break;
                         case "Free":
                             result = obj.Free(argument);
                             break;
                         case "Defragment":
                             obj.Defragment();
+                            continue;
                         default:
                             break;
                     }

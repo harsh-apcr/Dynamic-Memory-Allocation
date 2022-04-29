@@ -230,25 +230,25 @@ public class A1List extends List {
                 +  ", key = " + this.key + "}";
     }
 
-    public static void main(String[] args) {
-        // testing
-        List myList = new A1List();
-        myList.insert(0,5,5);
-        myList.insert(5,10,10);
-        myList.insert(152, 15, 15);
-        myList.insert(213,12,12);
-//        for(List itr = myList.getFirst(); itr.getNext() != null; itr = itr.getNext()) {
-//            System.out.println(itr);
-//        }
+//     public static void main(String[] args) {
+//         // testing
+//         List myList = new A1List();
+//         myList.insert(0,5,5);
+//         myList.insert(5,10,10);
+//         myList.insert(152, 15, 15);
+//         myList.insert(213,12,12);
+// //        for(List itr = myList.getFirst(); itr.getNext() != null; itr = itr.getNext()) {
+// //            System.out.println(itr);
+// //        }
 
-        // testing out sanity function
-        A1List myA1List = (A1List) myList;
-        myA1List = myA1List.next.next.next.next;
-        myA1List.next = myA1List.prev.prev.prev;
-        System.out.println(myA1List.sanity());
+//         // testing out sanity function
+//         A1List myA1List = (A1List) myList;
+//         myA1List = myA1List.next.next.next.next;
+//         myA1List.next = myA1List.prev.prev.prev;
+//         System.out.println(myA1List.sanity());
 
 
-    }
+//     }
 
 }
 

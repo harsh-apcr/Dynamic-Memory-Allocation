@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 public class Driver_alt {
     public static void main(String args[]) throws IOException{
         try {
-            String filename = "output_2mill.txt";
+            String filename = "D:\\Course Projects\\COL106-DataStruct\\Dynamic-Memory-Allocation\\COL106_A1\\src\\tests\\out_test16.txt";
             PrintWriter outputStream = new PrintWriter(filename);
-            File myObj = new File("./test16.txt");
+            File myObj = new File("D:\\Course Projects\\COL106-DataStruct\\Dynamic-Memory-Allocation\\COL106_A1\\src\\tests\\test16.txt");
             Scanner sc = new Scanner(myObj);
             int numTestCases;
             numTestCases = sc.nextInt();
@@ -26,7 +26,11 @@ public class Driver_alt {
                     int result = -5;
                     switch (command) {
                         case "Allocate":
-                            result = obj.Allocate(argument);
+                            try {
+                                result = obj.Allocate(argument);
+                            } catch(IllegalArgumentException exc) {
+                                result = -1;
+                            }
                             break;
                         case "Free":
                             result = obj.Free(argument);

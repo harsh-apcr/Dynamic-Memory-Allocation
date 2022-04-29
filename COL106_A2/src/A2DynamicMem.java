@@ -55,22 +55,22 @@ public class A2DynamicMem extends A1DynamicMem {
         }
         // clear the existing tree
         this.freeBlk = new BinarySearchTree<>(Comparator.comparingInt((MemoryBlock blk) -> blk.key));
-        freeBlkList.forEach((MemoryBlock blk) -> freeBlk.insert(new MemoryBlock(blk.address, blk.size, blk.size)));
+        freeBlkList.forEach((MemoryBlock blk) -> this.freeBlk.insert(new MemoryBlock(blk.address, blk.size, blk.size)));
     }
 
-    public static void main(String[] args) {
-        DynamicMem memSys = new A2DynamicMem(1000000,2);
-        memSys.Allocate(5);
-        memSys.Allocate(10);
-        memSys.Allocate(15);
-        memSys.Free(5);
-        memSys.Free(0);
-        memSys.Defragment();
-        memSys.Allocate(12);
-        System.out.println("Free Memory Block -----------");
-        memSys.freeBlk.inOrder().forEach(System.out::println);
-        System.out.println("Allocated Memory Block ------");
-        memSys.allocBlk.inOrder().forEach(System.out::println);
-    }
+    // public static void main(String[] args) {
+    //     DynamicMem memSys = new A2DynamicMem(1000000,2);
+    //     memSys.Allocate(5);
+    //     memSys.Allocate(10);
+    //     memSys.Allocate(15);
+    //     memSys.Free(5);
+    //     memSys.Free(0);
+    //     memSys.Defragment();
+    //     memSys.Allocate(12);
+    //     System.out.println("Free Memory Block -----------");
+    //     memSys.freeBlk.inOrder().forEach(System.out::println);
+    //     System.out.println("Allocated Memory Block ------");
+    //     memSys.allocBlk.inOrder().forEach(System.out::println);
+    // }
 
 }

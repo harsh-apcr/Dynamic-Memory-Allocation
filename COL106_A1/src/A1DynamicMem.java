@@ -30,6 +30,7 @@ public class A1DynamicMem extends DynamicMem {
         Dictionary firstFitBlock = freeBlock.find(blockSize, false);
         if (firstFitBlock == null) return -1;
         else {
+            int returnAddr = firstFitBlock.address;
             if (firstFitBlock.size > blockSize) {
                 // split the block
                 allocatedBlock.insert(firstFitBlock.address, blockSize, firstFitBlock.address);
@@ -42,7 +43,7 @@ public class A1DynamicMem extends DynamicMem {
                 allocatedBlock.insert(firstFitBlock.address, blockSize, firstFitBlock.address);
             }
             firstFitBlock.delete(firstFitBlock);    // firstFitBlock is a Dictionary i.e. part of this.freeBlk
-            return firstFitBlock.address;   // successful allocation
+            return returnAddr;   // successful allocation
         }
     }
 
@@ -62,28 +63,37 @@ public class A1DynamicMem extends DynamicMem {
         }
     }
 
-    public static void main(String[] args) {
-        DynamicMem memSystem = new A1DynamicMem(100);
-        memSystem.Allocate(5);
-        memSystem.Allocate(10);
-        memSystem.Allocate(15);
-        memSystem.Free(5);
-        memSystem.Free(0);
-        memSystem.Allocate(12);
-        Dictionary allocBlk = memSystem.allocBlk;
-        Dictionary freeBlk = memSystem.freeBlk;
+//     public static void main(String[] args) {
+// //        DynamicMem memSystem = new A1DynamicMem(100);
+// //        memSystem.Allocate(5);
+// //        memSystem.Allocate(10);
+// //        memSystem.Allocate(15);
+// //        memSystem.Free(5);
+// //        memSystem.Free(0);
+// //        memSystem.Allocate(12);
+// //        Dictionary allocBlk = memSystem.allocBlk;
+// //        Dictionary freeBlk = memSystem.freeBlk;
+// //
+// //        System.out.println("Alloc Block Traversal --------");
+// //        for (Dictionary itr = allocBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+// //            System.out.println(itr);
+// //        }
+// //        System.out.println("Free Block Traversal ---------");
+// //        for (Dictionary itr = freeBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+// //            System.out.println(itr);
+// //        }
 
-        System.out.println("Alloc Block Traversal --------");
-        for (Dictionary itr = allocBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
-            System.out.println(itr);
-        }
-        System.out.println("Free Block Traversal ---------");
-        for (Dictionary itr = freeBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
-            System.out.println(itr);
-        }
+//         DynamicMem memSys = new A1DynamicMem(500);
+//         System.out.println(memSys.Allocate(6));
 
-
-
-    }
+//         System.out.println("Alloc Block Traversal --------");
+//         for (Dictionary itr = memSys.allocBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+//             System.out.println(itr);
+//         }
+//         System.out.println("Free Block Traversal ---------");
+//         for (Dictionary itr = memSys.freeBlk.getFirst(); itr != null && itr.key != -1; itr = itr.getNext()) {
+//             System.out.println(itr);
+//         }
+//     }
 
 }

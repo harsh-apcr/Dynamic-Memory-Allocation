@@ -21,7 +21,8 @@ public class A1DynamicMem extends DynamicMem {
     public void Defragment() {}
 
     // In A1, you need to implement the Allocate and Free functions for the class A1DynamicMem
-
+    // In A23, Allocate must be implemented using Best-Fit-Split Algorithm
+    // for that you must modify your search function with `exact` parameter to return smallest size block >= blockSize (if exact is false)
     public int Allocate(int blockSize) {
         if (blockSize < 1) throw new IllegalArgumentException("BlockSize cannot be less than 1");
         BinarySearchTree<MemoryBlock> freeBlock = this.freeBlk;
@@ -34,9 +35,6 @@ public class A1DynamicMem extends DynamicMem {
 
         if (firstFitBlock == null) return -1;
         else {
-            try {
-                freeBlock.delete(firstFitBlock);    // firstFitBlock is a MemBlk i.e. part of this.freeBlk
-            } catch (Exception ignored) {}
             if (firstFitBlock.size > blockSize) {
                 // split the block
                 allocatedBlock.insert(new MemoryBlock(firstFitBlock.address, blockSize, firstFitBlock.address));
@@ -48,6 +46,9 @@ public class A1DynamicMem extends DynamicMem {
                 // blockSize == firstFitBlock.size
                 allocatedBlock.insert(new MemoryBlock(firstFitBlock.address, blockSize, firstFitBlock.address));
             }
+            try {
+                freeBlock.delete(firstFitBlock);    // firstFitBlock is a MemBlk i.e. part of this.freeBlk
+            } catch (Exception ignored) {}
             // above try-catch block will never throw an exception as firstFitBlock is present in the freeBlk
             return firstFitBlock.address;   // successful allocation
         }
@@ -68,7 +69,7 @@ public class A1DynamicMem extends DynamicMem {
         }
 
         // block != null
-        freeBlock.insert(block);
+        freeBlock.insert(new MemoryBlock(block.address, block.size, block.size));
         try {
             allocatedBlock.delete(block);
         } catch (Exception ignored) {}
@@ -77,17 +78,21 @@ public class A1DynamicMem extends DynamicMem {
 
     }
 
-    public static void main(String[] args) {
-        DynamicMem memSys = new A1DynamicMem(1000000,2);
-        memSys.Allocate(5);
-        memSys.Allocate(10);
-        memSys.Allocate(15);
-        memSys.Free(5);
-        memSys.Free(0);
-        System.out.println("Free Memory Block -----------");
-        memSys.freeBlk.inOrder().forEach(System.out::println);
-        System.out.println("Allocated Memory Block ------");
-        memSys.allocBlk.inOrder().forEach(System.out::println);
-    }
+    // public static void main(String[] args) {
+    //     DynamicMem memSys = new A2DynamicMem(10000,2);
+    //     memSys.Allocate(9000);
+    //     memSys.Free(0);
+    //     memSys.Allocate(20);
+    //     memSys.Allocate(40);
+    //     memSys.Allocate(60);
+    //     memSys.Free(9000);
+    //     memSys.Free(9020);
+    //     memSys.Allocate(1000);
+    //     memSys.Defragment();
+    //     System.out.println("Free Memory Block -----------");
+    //     memSys.freeBlk.inOrder().forEach(System.out::println);
+    //     System.out.println("Allocated Memory Block ------");
+    //     memSys.allocBlk.inOrder().forEach(System.out::println);
+    // }
 
 }

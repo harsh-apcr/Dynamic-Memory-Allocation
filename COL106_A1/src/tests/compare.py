@@ -5,10 +5,10 @@
 choose=input("Original [press 0] or New [press 1]?")
 if(choose==1):
   filename1 = input("input file: ans_test16.txt") 
-  filename2 = input("Output file: output_2mill.txt") 
+  filename2 = input("Output file: out_test16.txt") 
 else:
   filename1 = "ans_test16.txt"
-  filename2 = "output_2mill.txt"
+  filename2 = "out_test16.txt"
 
 file1 = open(filename1).readlines() 
  

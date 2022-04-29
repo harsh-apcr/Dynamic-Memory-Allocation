@@ -2,13 +2,13 @@
 @anirudha
 12:26:55 17-11-2020
 '''
-choose=input("Original [press 0] or New [press 1]?")
+choose=int(input("Original [press 0] or New [press 1]? "))
 if(choose==1):
-  filename1 = input("input file: testans500K.txt") 
-  filename2 = input("Output file: output500K.txt") 
+  filename1 = input("Input file: ") 
+  filename2 = input("Output file: ") 
 else:
-  filename1 = "testans500K.txt"
-  filename2 = "output500K.txt"
+  filename1 = "testans500K.out"
+  filename2 = "testout500K.txt"
 
 file1 = open(filename1).readlines() 
  
@@ -21,7 +21,7 @@ file2 = open(filename2).readlines()
  
 file2_line = [] 
 
-mismatch = 0;
+mismatch = 0
  
 for lines in file2: 
  file2_line.append(lines) 
@@ -54,9 +54,10 @@ else:
  n = 0 
  for line in file1_line: 
   if line != file2_line[n]: 
-#   print("Not Match:","Line :",n + 1,filename1,":",line,"|",filename2,":",file2_line[n])
+   print("Not Match:","Line :",n + 1,filename1,":",line,"|",filename2,":",file2_line[n])
    mismatch += 1
    n += 1
+   break
   else: 
    n += 1 
 print(mismatch,"mismatches")      

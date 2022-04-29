@@ -79,7 +79,7 @@ public abstract class DynamicMem {
     // It should return -1 in case block not found
     // Algorithm:
     //    1. Add the block to free blocks list (dictionary)
-    //    2. Delete the bock from the allocated blocks list (dictionary)
+    //    2. Delete the block from the allocated blocks list (dictionary)
 
     public abstract void Defragment();
     // This function de-fragments the free block list (dictionary)
